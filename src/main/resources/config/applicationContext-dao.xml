@@ -36,7 +36,7 @@
 		
 		<!-- 扫描mybatis代理对象 -->
 		<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-			<property name="basePackage" value="com.demo.dao"></property>
+			<property name="basePackage" value="com.erdangjia.dao"></property>
 		</bean>
 		
 </beans>

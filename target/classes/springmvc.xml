@@ -18,7 +18,7 @@
    		http://www.springframework.org/schema/task/spring-task-4.0.xsd">
 		
 		<!--  组件扫描 -->
-		<context:component-scan base-package="com.demo.mvc"/>
+		<context:component-scan base-package="com.erdangjia"/>
 		
 		<!-- 加载springmvc默认处理器 -->
 		<mvc:annotation-driven/>
@@ -34,14 +34,14 @@
 			</property>
 		</bean> -->
 		
-		<!-- 加载自定义的异常处理器 -->
-		<bean class="com.demo.mvc.utils.CustomHandlerExceptionResovler"/>
-		
 		<!-- 配置视图解析器 -->
 		<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 			<property name="prefix" value="/jsp/"></property>
 			<property name="suffix" value=".jsp"></property>
 		</bean>
+		
+		<!-- 加载自定义的异常处理器 -->
+		<bean class="com.erdangjia.common.CustomHandlerExceptionResovler"/>
 		
 		<!-- 配置附件上传解析器 -->
 		<!-- <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
