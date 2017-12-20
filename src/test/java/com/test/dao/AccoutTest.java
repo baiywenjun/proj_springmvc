@@ -1,5 +1,7 @@
 package com.test.dao;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -9,6 +11,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.erdangjia.dao.TbAccountMapper;
+import com.erdangjia.dao.TbGatherLogMapper;
 import com.erdangjia.entity.TbAccount;
 import com.erdangjia.entity.TbAccountExample;
 import com.erdangjia.entity.TbAccountExample.Criteria;
@@ -19,12 +22,28 @@ public class AccoutTest {
 
 	private ApplicationContext applicationContext;
 	private TbAccountMapper tbAccountMapper;
+	private TbGatherLogMapper tbGatherLogMapper;
 	
 	@Before
 	public void setUp() throws Exception {
 		
 		 applicationContext = new ClassPathXmlApplicationContext("springmvc.xml");
 		 tbAccountMapper = (TbAccountMapper) applicationContext.getBean("tbAccountMapper");
+		 tbGatherLogMapper = (TbGatherLogMapper) applicationContext.getBean("tbGatherLogMapper");
+	}
+	
+	@Test
+	public void getCount(){
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date date = sdf.parse("2017-12-01 12:12:12");
+			//int num = tbGatherLogMapper.getCountByCreateTime("2017-12-01");
+			int num = tbGatherLogMapper.getCountByCreateTime2(date);
+			System.err.println(num);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Test

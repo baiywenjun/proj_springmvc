@@ -208,4 +208,15 @@
       lat = #{lat,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
+  <select id="getCountByCreateTime" parameterType="java.lang.String" resultType="java.lang.Integer">
+  	select count(1) from tb_gather_log ga 
+	where to_days(ga.create_time) = to_days(#{dataStr});
+  </select>
+  
+  <select id="getCountByCreateTime2" parameterType="java.util.Date" resultType="java.lang.Integer">
+  	select count(1) from tb_gather_log ga 
+	where to_days(ga.create_time) = to_days(#{date});
+  </select>
+  
 </mapper>

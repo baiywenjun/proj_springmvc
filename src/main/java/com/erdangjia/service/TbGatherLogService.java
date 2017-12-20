@@ -1,6 +1,8 @@
 package com.erdangjia.service;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -29,4 +31,6 @@ public interface TbGatherLogService {
     int updateByPrimaryKeySelective(TbGatherLog record);
 
     int updateByPrimaryKey(TbGatherLog record);
+    
+    Map<String, List<Object>> selectTbGatherLogCountByDate(Date begin, Date end);
 }

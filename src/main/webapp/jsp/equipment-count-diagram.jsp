@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="${baseurl }/css/x-admin.css" media="all">
 <style type="text/css">
 	.inner_c {
-		width: 800px;
+		width: 1000px;
 		margin: 0 auto;
 		overflow: hidden;
 	}
@@ -22,53 +22,17 @@
 <script src="${baseurl }/lib/layui/layui.js"></script>
 <script src="${baseurl }/js/echarts.js"></script>
 <script type="text/javascript">
-	function dateSearch(){
-		var startDate = $("#LAY_demorange_s").val();
-		var endDate = $("#LAY_demorange_e").val();
-		//console.log(startDate);
-		//console.log(endDate);
-		if(startDate=='' || endDate==''){
-			alert("请选择日期区间！");
-		}
+	var xAxisNames = new Array();
+	var yAxisData = new Array();
+	var xyComposite = new Array();
+	
+	var columnChart;
+    var cakeChart;
+	
+	$(function(){
 		
-		$.ajax({
-			url:'xxx.do',
-			type:'post',
-			data:{'param':'中文实验','userName':userName,'userAddr':userAddr, 'userBirthday':userBirthday},
-			dataType:'json',
-			success:function(data){
-				console.log(data);
-				
-			}
-		});
-	}
-</script>
-</head>
-<body>
-	<!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
-	<div class="inner_c">
-		<h1>GPS设备统计</h1>
-		<div class="layui-form-item">
-		    <label class="layui-form-label">范围选择</label>
-		    <div class="layui-input-inline">
-		      <input class="layui-input" placeholder="开始日" id="LAY_demorange_s">
-		    </div>
-		    <div class="layui-input-inline">
-		      <input class="layui-input" placeholder="截止日" id="LAY_demorange_e">
-		    </div>
-		    <div class="layui-input-inline" style="width:80px">
-		      	<button class="layui-btn"  lay-submit="" lay-filter="sreach" onclick="dateSearch();"><i class="layui-icon">&#xe615;</i></button>
-		    </div>
-		  </div>
-		<div id="equipment_column" style="width: 600px;height:400px;"></div>
-    </div>
-    
-    <div class="inner_c">
-    	<h1>监控设备统计</h1>
-    	<div id="equipment_cake" style="width: 600px;height:400px;"></div>
-    </div>
-    <script type="text/javascript">
-    	// layui日期空间
+		
+		// layui日期空间
     	layui.use('laydate', function(){
 		  var laydate = layui.laydate;
 		  
@@ -100,80 +64,95 @@
 		    laydate(end);
 		  }
     	});
-    	/* $.ajax({
-			url:'/integration/getUserInfo.do',
-			type:'post',
-			data:{'param':'中文实验','userName':userName,'userAddr':userAddr, 'userBirthday':userBirthday},
-			dataType:'json',
-			success:function(data){
-				console.log(data);
-				$("#span1").text(data.userName);
-				var tmp0 = new Date(data.userBirthday);
-				var tmp1 = tmp0.toLocaleString();
-				$("#span2").text(tmp1);
-			}
-		}); */
+
     
         // 基于准备好的dom，初始化echarts实例
-        var columnChart = echarts.init(document.getElementById('equipment_column'));
-        var cakeChart = echarts.init(document.getElementById('equipment_cake'));
+        columnChart = echarts.init(document.getElementById('equipment_column'));
+        cakeChart = echarts.init(document.getElementById('equipment_cake'));
         
+        // 伪ajax TODO
+        xAxisNames.push("2017-12-10");
+		xAxisNames.push("2017-12-11");
+		xAxisNames.push("2017-12-12");
+		xAxisNames.push("2017-12-13");
+		xAxisNames.push("2017-12-14");
+		xAxisNames.push("2017-12-15");
+        
+		yAxisData.push(5);
+		yAxisData.push(2);
+		yAxisData.push(10);
+		yAxisData.push(12);
+		yAxisData.push(1);
+		yAxisData.push(2);
+		
+		for(var i=0; i<xAxisNames.length; i++){
+			var p = new Object();
+			p.name = xAxisNames[i];
+			p.value = yAxisData[i];
+			xyComposite.push(p);
+		} 
+		//console.log(xyComposite);
+
         // 指定图表的配置项和数据
         var columnChart_option = {
         	color : ['#3398DB'],
             title: {
-                text: '设备活跃数量'
+                text: '设备活跃数量-柱状图'
             },
             tooltip: {},
             legend: {
-                data:['销量']
+                data:['数量']
             },
             xAxis: {
-                data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+                data: xAxisNames
             },
             yAxis: {},
             series: [{
-                name: '销量',
+                name: '数量',
                 type: 'bar',
-                data: [5, 20, 36, 10, 10, 80]
+                data: yAxisData
             }]
         };
 		
         var cakeChart_option = {
-        	    title : {
-        	        text: '某站点用户访问来源',
-        	        subtext: '纯属虚构',
-        	        x:'center'
-        	    },
-        	    tooltip : {
+        		title: {
+                    text: '设备活跃数量-饼图'
+                },
+        		tooltip: {
         	        trigger: 'item',
-        	        formatter: "{a} <br/>{b} : {c} ({d}%)"
+        	        formatter: "{a} <br/>{b}: {c} ({d}%)"
         	    },
         	    legend: {
         	        orient: 'vertical',
-        	        left: 'left',
-        	        data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+        	        x: 'right',
+        	        y: 'center',
+        	        data:xAxisNames
         	    },
-        	    series : [
+        	    series: [
         	        {
-        	            name: '访问来源',
-        	            type: 'pie',
-        	            radius : '55%',
-        	            center: ['50%', '60%'],
-        	            data:[
-        	                {value:335, name:'直接访问'},
-        	                {value:310, name:'邮件营销'},
-        	                {value:234, name:'联盟广告'},
-        	                {value:135, name:'视频广告'},
-        	                {value:1548, name:'搜索引擎'}
-        	            ],
-        	            itemStyle: {
+        	            name:'访问来源',
+        	            type:'pie',
+        	            radius: ['50%', '70%'],
+        	            avoidLabelOverlap: false,
+        	            label: {
+        	                normal: {
+        	                    show: false,
+        	                    position: 'center'
+        	                },
         	                emphasis: {
-        	                    shadowBlur: 10,
-        	                    shadowOffsetX: 0,
-        	                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+        	                    show: true,
+        	                    textStyle: {
+        	                        fontSize: '30',
+        	                        fontWeight: 'bold'
+        	                    }
         	                }
-        	            }
+        	            },
+        	            labelLine: {
+        	                normal: {
+        	                    show: false
+        	                }
+        	            },
+        	            data:xyComposite
         	        }
         	    ]
         	}; 
@@ -181,7 +160,78 @@
         // 使用刚指定的配置项和数据显示图表。
         columnChart.setOption(columnChart_option);
         cakeChart.setOption(cakeChart_option);
-        
-    </script>
+	});
+	
+	
+	
+	function dateSearch(){
+		var startDate = $("#LAY_demorange_s").val();
+		var endDate = $("#LAY_demorange_e").val();
+		//console.log(startDate);
+		//console.log(endDate);
+		if(startDate=='' || endDate==''){
+			alert("请选择日期区间！");
+			return;
+		}
+		
+		 $.ajax({
+			url: '${baseurl}/gatherLog/count.do',
+			type:'post',
+			data:{'beginDate':startDate,'endDate':endDate},
+			dataType:'json',
+			success:function(data){
+				//console.log(data);
+				columnChart.setOption({
+			        xAxis: {
+			            data: data.xNames
+			        },
+			        series: [{
+			            // 根据名字对应到相应的系列
+			            name: '数量',
+			            data: data.yData
+			        }]
+			    });
+				for(var i=0; i<xAxisNames.length; i++){
+					var p = new Object();
+					p.name = data.xNames[i];
+					p.value = data.yData[i];
+					xyComposite.push(p);
+				} 
+				cakeChart.setOption({
+					legend: {
+	        	        data: data.xNames
+	        	    },
+	        	    series: [{
+	        	    	name: '访问来源',
+	        	    	data:xyComposite
+	        	    }]
+				})
+			}
+		});
+	}
+</script>
+</head>
+<body>
+	<!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+	<div class="inner_c">
+		<h1>GPS设备统计</h1>
+		<div class="layui-form-item">
+		    <label class="layui-form-label">范围选择</label>
+		    <div class="layui-input-inline">
+		      <input class="layui-input" placeholder="开始日" id="LAY_demorange_s">
+		    </div>
+		    <div class="layui-input-inline">
+		      <input class="layui-input" placeholder="截止日" id="LAY_demorange_e">
+		    </div>
+		    <div class="layui-input-inline" style="width:80px">
+		      	<button class="layui-btn"  lay-submit="" lay-filter="sreach" onclick="dateSearch();"><i class="layui-icon">&#xe615;</i></button>
+		    </div>
+		  </div>
+		<div id="equipment_column" style="width: 700px;height:400px;"></div>
+    </div>
+    
+    <div class="inner_c">
+    	<div id="equipment_cake" style="width: 700px;height:400px;"></div>
+    </div>
 </body>
 </html>

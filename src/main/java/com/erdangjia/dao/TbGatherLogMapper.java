@@ -2,6 +2,8 @@ package com.erdangjia.dao;
 
 import com.erdangjia.entity.TbGatherLog;
 import com.erdangjia.entity.TbGatherLogExample;
+
+import java.util.Date;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -27,4 +29,8 @@ public interface TbGatherLogMapper {
     int updateByPrimaryKeySelective(TbGatherLog record);
 
     int updateByPrimaryKey(TbGatherLog record);
+    
+    int getCountByCreateTime(String dateStr);
+    
+    int getCountByCreateTime2(Date date);
 }
