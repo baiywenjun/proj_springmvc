@@ -22,6 +22,7 @@ public class CustomHandlerExceptionResovler implements HandlerExceptionResolver{
 		}else{
 			customeException = new CustomeException("500", "未知错误");
 			// TODO 要打log进日志文件
+			System.err.println(ex.getMessage());
 		}
 		
 		ModelAndView modelAndView = new ModelAndView();

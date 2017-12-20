@@ -102,21 +102,21 @@
 				<tr>
 					<!-- <th><input type="checkbox" name="" value=""></th> -->
 					<th>序号</th>
-					<th>设备名称</th>
-					<th>设备编号</th>
-					<th>设备类型</th>
-					<th>加入时间</th>
+					<th>帐号</th>
+					<th>姓名</th>
+					<th>注册时间</th>
+					<th>电话</th>
 					<!-- <th>操作</th> -->
 				</tr>
 			</thead>
 			<tbody class="tbody">
-				<c:forEach items="${pageInfo.list}" var="item">
+				<c:forEach items="${pageInfo.list}" var="item" varStatus="status">
 					<tr>
-						<td>${item.id }</td>
-						<td>${item.equmentName }</td>
-						<td>${item.equmentNo }</td>
-						<td>${item.equmentType }</td>
+						<td>${status.count }</td>
+						<td>${item.accountId }</td>
+						<td>${item.userName }</td>
 						<td>${item.createTime }</td>
+						<td>${item.phone }</td>
 					</tr>
 				</c:forEach>
 				<c:if test="${!empty message }">

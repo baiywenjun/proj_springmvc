@@ -1,11 +1,13 @@
 package com.erdangjia.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
 import com.erdangjia.entity.TbAccount;
 import com.erdangjia.entity.TbAccountExample;
+import com.github.pagehelper.PageInfo;
 
 public interface TbAccountService {
 	
@@ -31,4 +33,5 @@ public interface TbAccountService {
 
     int updateByPrimaryKey(TbAccount record);
 	
+    PageInfo listPage(int pageNum, int pageSize, Map<String, Object> condition);
 }

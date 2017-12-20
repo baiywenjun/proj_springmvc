@@ -22,7 +22,7 @@
             <div class="layui-header header header-demo">
                 <div class="layui-main">
                     <a class="logo" href="http://www.erdangjiade.com" target="_blank">
-                        二当家的后台Versino1.0
+                        某某项目的后台Versino1.0
                     </a>
                     <ul class="layui-nav" lay-filter="">
                       <li class="layui-nav-item"><img src="./images/logo.png" class="layui-circle" style="border: 2px solid #A9B7B7;" width="35px" alt=""></li>
@@ -74,7 +74,7 @@
                             <dl class="layui-nav-child">
                                 <dd class="">
                                     <dd class="">
-                                        <a href="javascript:;" _href="jsp/equipment-list.jsp">
+                                        <a href="javascript:;" _href="${baseurl }/equipment/list.do">
                                             <cite>设备列表</cite>
                                         </a>
                                     </dd>
@@ -168,11 +168,11 @@
                         </li>
                         <li class="layui-nav-item">
                             <a class="javascript:;" href="javascript:;">
-                                <i class="layui-icon" style="top: 3px;">&#xe612;</i><cite>会员管理</cite>
+                                <i class="layui-icon" style="top: 3px;">&#xe612;</i><cite>客户管理</cite>
                             </a>
                             <dl class="layui-nav-child">
                                 <dd class="">
-                                    <a href="javascript:;" _href="member-list.html">
+                                    <a href="javascript:;" _href="${baseurl }/account/list.do">
                                         <cite>会员列表</cite>
                                     </a>
                                 </dd>
@@ -232,17 +232,17 @@
                         </li>
                         <li class="layui-nav-item">
                             <a class="javascript:;" href="javascript:;">
-                                <i class="layui-icon" style="top: 3px;">&#xe629;</i><cite>系统统计</cite>
+                                <i class="layui-icon" style="top: 3px;">&#xe629;</i><cite>数据统计</cite>
                             </a>
                             <dl class="layui-nav-child">
                                 <dd class="">
-                                    <a href="javascript:;" _href="./echarts1.html">
-                                        <cite>拆线图</cite>
+                                    <a href="javascript:;" _href="${baseurl }/jsp/account-count-diagram.jsp">
+                                        <cite>用户数量统计-折线图</cite>
                                     </a>
                                 </dd>
                                 <dd class="">
-                                    <a href="javascript:;" _href="./echarts2.html">
-                                        <cite>柱状图</cite>
+                                    <a href="javascript:;" _href="${baseurl }/jsp/equipment-count-diagram.jsp">
+                                        <cite>设备统计-柱状图</cite>
                                     </a>
                                 </dd>
                                 <dd class="">
