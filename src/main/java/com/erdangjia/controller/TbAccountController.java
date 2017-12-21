@@ -1,5 +1,8 @@
 package com.erdangjia.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -31,6 +35,7 @@ public class TbAccountController {
 		return "account-list";
 	}
 	
+	@SuppressWarnings("rawtypes")
 	@RequestMapping("/list/page")
 	@ResponseBody
 	public List<TbEqument> listPageAccount(@RequestParam(defaultValue="1") String pageNum,
@@ -46,5 +51,28 @@ public class TbAccountController {
 		return list;
 	}
 	
+	/**
+	 * equipment-count-diagram.jsp 请求接口
+	 * @param beginDate
+	 * @param endDate
+	 * @return
+	 */
+//	@RequestMapping(value="/count",method=RequestMethod.POST)
+//	@ResponseBody
+//	public Map<String, List<Object>> getCountData(String beginDate, String endDate){
+//		Date begin = null;
+//		Date end = null;
+//		try {
+//			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//			begin = sdf.parse(beginDate);
+//			end = sdf.parse(endDate);
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//		}
+//		
+//		Map<String, List<Object>> data = tbGatherLogService.selectTbGatherLogCountByDate(begin, end);
+//		
+//		return data;
+//	}
 	
 }

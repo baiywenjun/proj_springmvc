@@ -23,7 +23,12 @@ public class TbGatherLogController {
 	@Autowired
 	private TbGatherLogService tbGatherLogService;
 	
-	
+	/**
+	 * equipment-count-diagram.jsp 请求接口
+	 * @param beginDate
+	 * @param endDate
+	 * @return
+	 */
 	@RequestMapping(value="/count",method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, List<Object>> getCountData(String beginDate, String endDate){

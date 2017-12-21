@@ -48,6 +48,84 @@
 <script src="${baseurl }/js/jquery.min.js"></script>
 <script src="${baseurl }/lib/layui/layui.js"></script>
 <script src="${baseurl }/js/echarts.js"></script>
+<script type="text/javascript">
+	var xAxisNames = new Array();
+	var yAxisData = new Array();
+	
+	$(function(){
+		
+		// TODO 伪ajax
+		xAxisNames.push("2017-12-10");
+		xAxisNames.push("2017-12-11");
+		xAxisNames.push("2017-12-12");
+		xAxisNames.push("2017-12-13");
+		xAxisNames.push("2017-12-14");
+		xAxisNames.push("2017-12-15");
+        
+		yAxisData.push(5);
+		yAxisData.push(2);
+		yAxisData.push(10);
+		yAxisData.push(12);
+		yAxisData.push(1);
+		yAxisData.push(2);
+		
+		/* $.ajax({
+			url: '${baseurl}/gatherLog/count.do',
+			type:'post',
+			data:{'beginDate':startDate,'endDate':endDate},
+			dataType:'json',
+			success:function(data){
+				//console.log(data);
+			}	
+		}); */
+		
+		// 基于准备好的dom，初始化echarts实例
+        var addlineChart = echarts.init(document.getElementById('account_addline'));
+       
+        // 指定图表的配置项和数据
+        option = {
+		    title: {
+		        text: '用户数量'
+		    },
+		    tooltip: {
+		        trigger: 'axis'
+		    },
+		    legend: {
+		        data:['用户数量']
+		    },
+		    grid: {
+		        left: '3%',
+		        right: '4%',
+		        bottom: '3%',
+		        containLabel: true
+		    },
+		    toolbox: {
+		        feature: {
+		            saveAsImage: {}
+		        }
+		    },
+		    xAxis: {
+		        type: 'category',
+		        boundaryGap: false,
+		        data: xAxisNames
+		    },
+		    yAxis: {
+		        type: 'value'
+		    },
+		    series: [
+		        {
+		            name:'用户数量',
+		            type:'line',
+		            stack: '总量',
+		            data:yAxisData
+		        }
+		    ]
+		};
+		
+       
+        addlineChart.setOption(option);
+	});
+</script>
 </head>
 <body>
 	<!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
@@ -70,77 +148,5 @@
     	<div id="account_addline" style="width: 800px;height:400px;"></div>
     </div>
     
-    <script type="text/javascript">
-        // 基于准备好的dom，初始化echarts实例
-        var addlineChart = echarts.init(document.getElementById('account_addline'));
-       
-        // 指定图表的配置项和数据
-        option = {
-		    title: {
-		        text: '折线图堆叠'
-		    },
-		    tooltip: {
-		        trigger: 'axis'
-		    },
-		    legend: {
-		        data:['邮件营销','联盟广告','视频广告','直接访问','搜索引擎']
-		    },
-		    grid: {
-		        left: '3%',
-		        right: '4%',
-		        bottom: '3%',
-		        containLabel: true
-		    },
-		    toolbox: {
-		        feature: {
-		            saveAsImage: {}
-		        }
-		    },
-		    xAxis: {
-		        type: 'category',
-		        boundaryGap: false,
-		        data: ['周一','周二','周三','周四','周五','周六','周日']
-		    },
-		    yAxis: {
-		        type: 'value'
-		    },
-		    series: [
-		        {
-		            name:'邮件营销',
-		            type:'line',
-		            stack: '总量',
-		            data:[120, 132, 101, 134, 90, 230, 210]
-		        },
-		        {
-		            name:'联盟广告',
-		            type:'line',
-		            stack: '总量',
-		            data:[220, 182, 191, 234, 290, 330, 310]
-		        },
-		        {
-		            name:'视频广告',
-		            type:'line',
-		            stack: '总量',
-		            data:[150, 232, 201, 154, 190, 330, 410]
-		        },
-		        {
-		            name:'直接访问',
-		            type:'line',
-		            stack: '总量',
-		            data:[320, 332, 301, 334, 390, 330, 320]
-		        },
-		        {
-		            name:'搜索引擎',
-		            type:'line',
-		            stack: '总量',
-		            data:[820, 932, 901, 934, 1290, 1330, 1320]
-		        }
-		    ]
-		};
-		
-       
-        addlineChart.setOption(option);
-        
-    </script>
 </body>
 </html>
