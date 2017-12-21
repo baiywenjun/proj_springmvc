@@ -55,7 +55,7 @@
 	$(function(){
 		
 		// TODO 伪ajax
-		xAxisNames.push("2017-12-10");
+		/* xAxisNames.push("2017-12-10");
 		xAxisNames.push("2017-12-11");
 		xAxisNames.push("2017-12-12");
 		xAxisNames.push("2017-12-13");
@@ -67,17 +67,35 @@
 		yAxisData.push(10);
 		yAxisData.push(12);
 		yAxisData.push(1);
-		yAxisData.push(2);
+		yAxisData.push(2); */
 		
-		/* $.ajax({
-			url: '${baseurl}/gatherLog/count.do',
+		var endDate = new Date();
+		var endDateStr = endDate.toLocaleString();
+		//var endDateStr = null;
+		//alert(endDateStr);
+		
+		$.ajax({
+			async: false,
+			url: '${baseurl}/account/count.do',
 			type:'post',
-			data:{'beginDate':startDate,'endDate':endDate},
+			data:{'endDate':endDateStr},
 			dataType:'json',
-			success:function(data){
-				//console.log(data);
+			success:function(result){
+				if(result.code == 200){
+					/* console.log(result.data.countDUM);
+					console.log(result.data.diagram.xNames)
+					console.log(result.data.diagram.yData) */
+					var dum = result.data.countDUM;
+					$("#day_reg").text(dum.countDay);
+					$("#week_reg").text(dum.countWeek);
+					$("#month_reg").text(dum.countMonth);
+					xAxisNames = result.data.diagram.xNames;
+					yAxisData = result.data.diagram.yData;
+				}else{
+					alert(result.msg);
+				}
 			}	
-		}); */
+		});
 		
 		// 基于准备好的dom，初始化echarts实例
         var addlineChart = echarts.init(document.getElementById('account_addline'));
@@ -117,7 +135,7 @@
 		            name:'用户数量',
 		            type:'line',
 		            stack: '总量',
-		            data:yAxisData
+		            data: yAxisData
 		        }
 		    ]
 		};
@@ -125,6 +143,10 @@
        
         addlineChart.setOption(option);
 	});
+	
+	Date.prototype.toLocaleString = function(){
+		return this.getFullYear() + "-" +(this.getMonth()+1) + "-" + this.getDate() + " " + this.getHours() + ":" + this.getMinutes() + ":" + this.getSeconds();
+	}
 </script>
 </head>
 <body>
@@ -133,16 +155,16 @@
 		<h1>用户数量统计</h1>
 		<div class="viewdata">
 			<div class="first">
-				<p>活跃用户</p>
-				<p>10</p>
+				<p>今日注册</p>
+				<p id="day_reg">null</p>
 			</div>
 			<div class="middle">
-				<p>活跃用户</p>
-				<p>10</p>
+				<p>本周</p>
+				<p id="week_reg">null</p>
 			</div>
 			<div class="last">
-				<p>活跃用户</p>
-				<p>10</p>
+				<p>本月</p>
+				<p id="month_reg">null</p>
 			</div>
 		</div>
     	<div id="account_addline" style="width: 800px;height:400px;"></div>

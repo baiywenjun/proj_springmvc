@@ -225,4 +225,20 @@
       phone = #{phone,jdbcType=VARCHAR}
     where account_id = #{accountId,jdbcType=BIGINT}
   </update>
+  
+  <!-- 根据day统计当天的注册量 -->
+  <select id="countByDay" parameterType="java.util.Date" resultType="java.lang.Integer">
+  	select count(ta.account_id) count from tb_account ta 
+	where DATE_FORMAT(ta.create_time,'%Y%u%d') = DATE_FORMAT(#{date},'%Y%u%d');
+  </select>
+  <!-- 根据week统计当周的注册量 -->
+  <select id="countByWeek" parameterType="java.util.Date" resultType="java.lang.Integer">
+  	select count(ta.account_id) count from tb_account ta 
+	where DATE_FORMAT(ta.create_time,'%Y%u') = DATE_FORMAT(#{date},'%Y%u');
+  </select>
+  <!-- 根据month统计当月的注册量 -->
+  <select id="countByMonth" parameterType="java.util.Date" resultType="java.lang.Integer">
+  	select count(ta.account_id) count from tb_account ta 
+	where DATE_FORMAT(ta.create_time,'%Y%m') = DATE_FORMAT(#{date},'%Y%m');
+  </select>
 </mapper>

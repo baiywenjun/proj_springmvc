@@ -16,6 +16,58 @@
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="format-detection" content="telephone=no">
         <link rel="stylesheet" href="${baseurl}/css/x-admin.css" media="all">
+        <script src="${baseurl }/lib/layui/layui.js" charset="utf-8"></script>
+        <script src="${baseurl }/js/jquery.min.js"></script>
+        
+        <script type="text/javascript">
+        	$(function(){
+        		
+	            layui.use(['form'],
+	            function() {
+	                $ = layui.jquery;
+	                var form = layui.form(),
+	                layer = layui.layer;
+	
+	                $('.x-login-right li').click(function(event) {
+	                    color = $(this).attr('color');
+	                    $('body').css('background-color', color);
+	                });
+	
+	                //监听提交
+	                form.on('submit(save)',
+	                function(data) {
+	                    //console.log(data);
+	                    // TODO,帐号密码不符合规范弹框提示
+	                    /* layer.alert(JSON.stringify(data.field), {
+	                      title: '最终的提交信息,TODO 前端做一层校验'
+	                    },function  () {
+	                        alert("点击确定后的事件")
+	                    }); */
+	                    
+	                    $.ajax({
+	            			url: '${baseurl}/login.do',
+	            			type: 'post',
+	            			data: {"userName":data.field.username,"password":data.field.pass},
+	            			dataType: 'json',
+	            			success: function(result){
+	            				if(result.code == 200){
+	            					alert(result.msg);
+	            					location.href = "${baseurl}/index.jsp";
+	            				}else{
+	            					alert(result.msg);
+	            				}
+	            			}
+	            		});
+	                    
+	                    //location.href = "${baseurl}/index.do";
+	                    return false;
+	                });
+	
+	            });
+        		
+        	});
+			
+        </script>
     </head>
     
     <body style="background-color: #393D49">
@@ -35,7 +87,7 @@
             </div>
             <div class="x-mid">
                 <div class="x-avtar">
-                    <img src="./images/logo.png" alt="">
+                    <img src="${baseurl }/images/logo.png" alt="">
                 </div>
                 <div class="input">
                     <form class="layui-form">
@@ -45,7 +97,7 @@
                             </label>
                             <div class="layui-input-inline">
                                 <input type="text" id="username" name="username" required="" lay-verify="username"
-                                autocomplete="off" placeholder="username" class="layui-input">
+                                autocomplete="off" placeholder="" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-form-item x-login-box">
@@ -54,7 +106,7 @@
                             </label>
                             <div class="layui-input-inline">
                                 <input type="password" id="pass" name="pass" required="" lay-verify="pass"
-                                autocomplete="off" placeholder="******" class="layui-input">
+                                autocomplete="off" placeholder="" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-form-item" id="loginbtn">
@@ -67,35 +119,7 @@
             </div>
         </div>
         <p style="color:#fff;text-align: center;">Copyright © 2017.Company name All rights X-admin </p>
-        <script src="./lib/layui/layui.js" charset="utf-8">
-        </script>
-        <script>
-            layui.use(['form'],
-            function() {
-                $ = layui.jquery;
-                var form = layui.form(),
-                layer = layui.layer;
-
-                $('.x-login-right li').click(function(event) {
-                    color = $(this).attr('color');
-                    $('body').css('background-color', color);
-                });
-
-                //监听提交
-                form.on('submit(save)',
-                function(data) {
-                    console.log(data);
-                    layer.alert(JSON.stringify(data.field), {
-                      title: '最终的提交信息'
-                    },function  () {
-                        location.href = "./index.html";
-                    })
-                    return false;
-                });
-
-            });
-
-        </script>
+       
     </body>
 
 </html>

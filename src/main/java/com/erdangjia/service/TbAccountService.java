@@ -1,5 +1,6 @@
 package com.erdangjia.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -34,4 +35,13 @@ public interface TbAccountService {
     int updateByPrimaryKey(TbAccount record);
 	
     PageInfo listPage(int pageNum, int pageSize, Map<String, Object> condition);
+    
+    Map<String, Object> selectCountRegister(Date date);
+    
+    Map<String, List<Object>> selectTbAccountCountByDays(Date end);
+    
+    Map<String, List<Object>> selectTbAccountCountByDays(Date begin, Date end);
+    
+    TbAccount selectTbAccountByUserName(String userName);
+    
 }

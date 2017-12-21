@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/jsp/common/tag.jsp"%>
+
 
 <!DOCTYPE html>
 <html>
@@ -13,7 +15,7 @@
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="format-detection" content="telephone=no">
-        <link rel="stylesheet" href="./css/x-admin.css" media="all">
+        <link rel="stylesheet" href="${baseurl }/css/x-admin.css" media="all">
     </head>
     <body>
         <div class="x-body">
@@ -196,8 +198,8 @@
                 </p>
             </div>
         </div>
-        <script src="./lib/layui/layui.js" charset="utf-8"></script>
-        <script src="./js/x-admin.js"></script>
+        <script src="${baseurl }/lib/layui/layui.js" charset="utf-8"></script>
+        <script src="${baseurl }/js/x-admin.js"></script>
         <script>
         var _hmt = _hmt || [];
         (function() {

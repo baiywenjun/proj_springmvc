@@ -31,19 +31,20 @@
 				<!-- 对静态资源设置匿名访问 -->
 				/images/** = anon
 				/js/** = anon
+				/lib/** = anon
 				/styles/** = anon
-				/jfreechart = anon
+				/css/** = anon
 				/test/** =anon
 				<!-- 验证码，可匿名访问 -->
 				/auth/validatecode.jsp = anon
 				<!-- 登陆提交 -->
-				/auth/login.action = anon
+				/login.do = anon
 
 				<!-- 退出拦截，请求logout.action执行退出操作 -->
-				/auth/logout.action = logout
+				/logout.do = logout
 
 				<!-- /** = authc 所有url都必须认证通过才可以访问 -->
-				/** = anon
+				/** = authc
 				<!-- /** = authc -->
 			</value>
 		</property>
@@ -51,7 +52,7 @@
 	
 	<!-- 认证授权管理器 -->
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-		<!-- <property name="realm" ref="customeRealm" /> -->
+		<property name="realm" ref="customeRealm" />
 		<property name="sessionManager" ref="sessionManager" />
 	</bean>
 	

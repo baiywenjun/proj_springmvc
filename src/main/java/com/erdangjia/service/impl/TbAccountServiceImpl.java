@@ -1,9 +1,12 @@
 package com.erdangjia.service.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +14,8 @@ import com.erdangjia.common.CustomeException;
 import com.erdangjia.dao.TbAccountMapper;
 import com.erdangjia.entity.TbAccount;
 import com.erdangjia.entity.TbAccountExample;
-import com.erdangjia.entity.TbEqument;
-import com.erdangjia.entity.TbAccountExample;
 import com.erdangjia.entity.TbAccountExample.Criteria;
+import com.erdangjia.myutil.DateUtil;
 import com.erdangjia.service.TbAccountService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -118,6 +120,97 @@ public class TbAccountServiceImpl implements TbAccountService {
 		List<TbAccount> list = this.selectByExample(example);
 		PageInfo page = new PageInfo(list);
 		return page;
+	}
+	
+	
+	/**
+	 * 根据输入时间查询月、周、天注册人数
+	 * @param date
+	 * @return
+	 */
+	public Map<String, Object> selectCountRegister(Date date){
+		Date now = date;
+		if(date == null){
+			now = new Date();
+		}
+		
+		int countDay = tbAccoutMapper.countByDay(now);
+		int countWeek = tbAccoutMapper.countByWeek(now);
+		int countMonth = tbAccoutMapper.countByMonth(now);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("countDay", countDay);
+		map.put("countWeek", countWeek);
+		map.put("countMonth", countMonth);
+		
+		return map;
+	}
+	
+	/**
+	 * 获取最近一周的注册数
+	 * @param end
+	 * @return
+	 */
+	public Map<String, List<Object>> selectTbAccountCountByDays(Date end){
+		DateUtil util = new DateUtil();
+		Date afterNDay = util.afterNDay(end, -6);
+		
+		return this.selectTbAccountCountByDays(afterNDay, end);
+	}
+	
+	
+	/**
+	 * 根据时间获取注册数
+	 * @param begin
+	 * @param end
+	 * @return
+	 */
+	public Map<String, List<Object>> selectTbAccountCountByDays(Date begin, Date end){
+		Map<String, List<Object>> map = new HashMap<>();
+		List<Object> xNameList = new ArrayList<>();
+		List<Object> yDataList = new ArrayList<>();
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		//tbGatherLogMapper.getCountByCreateTime(dateStr);
+		int intervalDays = DateUtil.getIntervalDays(begin, end);
+		String beginStr = sdf.format(begin);
+		xNameList.add(beginStr);
+		int chooseCount = tbAccoutMapper.countByDay(begin);
+		yDataList.add(chooseCount);
+		
+		for(int i=0; i<intervalDays; i++){
+			long dayMills = 1000*60*60*24 * (i+1);
+			long nextDayMills = begin.getTime() + dayMills;
+			Date nextDay = new Date(nextDayMills);
+			String nextDayStr = sdf.format(nextDay);
+			xNameList.add(nextDayStr);
+			int count = tbAccoutMapper.countByDay(nextDay);
+			yDataList.add(count);
+		}
+		
+		map.put("xNames", xNameList);
+		map.put("yData", yDataList);
+		
+		return map;
+	}
+	
+	/**
+	 * 根据用户名查询
+	 * @param userName
+	 * @return
+	 */
+	public TbAccount selectTbAccountByUserName(String userName){
+		TbAccountExample example = new TbAccountExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andUserNameEqualTo(userName);
+		List<TbAccount> list = this.selectByExample(example);
+		
+		if(list.isEmpty()){
+			return null;
+		}
+		
+		return list.get(0);
 	}
 	
 }

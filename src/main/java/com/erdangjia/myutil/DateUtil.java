@@ -202,8 +202,9 @@ public class DateUtil {
     
     public static void main(String [] args) {
     	//System.out.println(verifyDate("2012-09-27"));
-    	String test = ",1.1,1.2,1.3,";
-		System.out.println(test.split(",").length);
+    	DateUtil util = new DateUtil();
+    	Date afterNDay = util.afterNDay(new Date(), -6);
+    	System.err.println(util.formatDate(afterNDay));
     }
 	
 }

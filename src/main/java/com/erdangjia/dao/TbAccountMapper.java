@@ -1,10 +1,12 @@
 package com.erdangjia.dao;
 
+import java.util.Date;
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.erdangjia.entity.TbAccount;
 import com.erdangjia.entity.TbAccountExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Component;
 
 public interface TbAccountMapper {
     int countByExample(TbAccountExample example);
@@ -28,4 +30,12 @@ public interface TbAccountMapper {
     int updateByPrimaryKeySelective(TbAccount record);
 
     int updateByPrimaryKey(TbAccount record);
+    
+    int countByDay(Date date);
+    
+    int countByWeek(Date date);
+    
+    int countByMonth(Date date);
+    
+    
 }

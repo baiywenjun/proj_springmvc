@@ -7,15 +7,19 @@ import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import ch.qos.logback.core.subst.Token;
+import com.erdangjia.entity.TbAccount;
+import com.erdangjia.service.TbAccountService;
 
 public class CustomRealm extends AuthorizingRealm{
 
+	@Autowired
+	private TbAccountService tbAccountService;
+	
 	// 授权
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-		
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -26,8 +30,8 @@ public class CustomRealm extends AuthorizingRealm{
 		
 		String usercode = (String) token.getPrincipal();
 		
-		String usercode_db = "zhangsan";
-		if(!usercode.equals(usercode)){
+		TbAccount account = tbAccountService.selectTbAccountByUserName(usercode);
+		if(account == null){
 			//返回null，认证器接收到null，抛出异常UnknownAccountException
 			return null;
 		}
@@ -35,9 +39,11 @@ public class CustomRealm extends AuthorizingRealm{
 		//执行到这里说明账号存在
 		//根据账号从数据库查询正确的密码 
 		//模拟正确的密码 
-		String pwd_db = "123";
+		//String pwd_db = "123";
+		String pwd = account.getPassWord();
 		
-		SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(usercode_db,pwd_db,"customRealm");
+		//SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(usercode,pwd,"customRealm");
+		SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(account.getUserName(), pwd, "customRealm");
 		
 		return simpleAuthenticationInfo;
 	}

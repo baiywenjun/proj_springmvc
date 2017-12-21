@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.erdangjia.controller.domain.Result;
 import com.erdangjia.entity.TbEqument;
 import com.erdangjia.service.TbAccountService;
 import com.github.pagehelper.PageInfo;
@@ -57,22 +59,42 @@ public class TbAccountController {
 	 * @param endDate
 	 * @return
 	 */
-//	@RequestMapping(value="/count",method=RequestMethod.POST)
-//	@ResponseBody
-//	public Map<String, List<Object>> getCountData(String beginDate, String endDate){
-//		Date begin = null;
-//		Date end = null;
-//		try {
-//			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//			begin = sdf.parse(beginDate);
-//			end = sdf.parse(endDate);
-//		} catch (ParseException e) {
-//			e.printStackTrace();
-//		}
-//		
-//		Map<String, List<Object>> data = tbGatherLogService.selectTbGatherLogCountByDate(begin, end);
-//		
-//		return data;
-//	}
+	@RequestMapping(value="/count",method=RequestMethod.POST)
+	@ResponseBody
+	public Result getCountData(String beginDate, String endDate){
+		
+		if(StringUtils.isEmpty(beginDate) && StringUtils.isEmpty(endDate)){
+			return new Result(400, "结束日期不能为空");
+		}
+		
+		Date begin = null;
+		Date end = null;
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			if(beginDate!=null){
+				begin = sdf.parse(beginDate);
+			}
+			end = sdf.parse(endDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		Result result = new Result();
+		if(begin == null){
+			Map<String, Object> countDUM = tbAccountService.selectCountRegister(end);
+			Map<String, List<Object>> diagram = tbAccountService.selectTbAccountCountByDays(end);
+			Map<String, Object> data = new HashMap<>();
+			data.put("countDUM", countDUM);
+			data.put("diagram", diagram);
+			
+			result.setCode(200);
+			result.setData(data);
+		}else{
+			// XXX 指定时间段的统计（暂无需求）
+		}
+		
+		
+		return result;
+	}
 	
 }
