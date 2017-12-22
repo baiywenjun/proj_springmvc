@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +20,13 @@ import com.erdangjia.entity.TbGatherLogExample;
 import com.erdangjia.myutil.DateUtil;
 import com.erdangjia.service.TbGatherLogService;
 
+import sun.tools.tree.ThisExpression;
+
 @Service("tbGatherLogService")
 public class TbGatherLogServiceImpl implements TbGatherLogService {
 
+	// private static Logger log = LoggerFactory.getLogger(this.getClass()); 
+	
 	@Autowired
 	private TbGatherLogMapper tbGatherLogMapper;
 	
