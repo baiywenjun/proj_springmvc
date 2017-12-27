@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -20,6 +22,8 @@ import com.github.pagehelper.PageInfo;
 
 public class AccoutTest {
 
+	private static Logger log = LoggerFactory.getLogger(AccoutTest.class);
+	
 	private ApplicationContext applicationContext;
 	private TbAccountMapper tbAccountMapper;
 	private TbGatherLogMapper tbGatherLogMapper;
@@ -49,7 +53,8 @@ public class AccoutTest {
 	@Test
 	public void getAccountById(){
 		TbAccount account = tbAccountMapper.selectByPrimaryKey(1l);
-		System.err.println(account.getUserName());
+		//System.err.println(account.getUserName());
+		log.debug("====>"+account.getUserName());
 	}
 	
 	@Test
