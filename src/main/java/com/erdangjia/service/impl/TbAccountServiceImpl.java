@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.erdangjia.common.CustomeException;
 import com.erdangjia.dao.TbAccountMapper;
@@ -20,6 +21,7 @@ import com.erdangjia.service.TbAccountService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
+@Transactional
 @Service("tbAccountService")
 public class TbAccountServiceImpl implements TbAccountService {
 
@@ -165,6 +167,8 @@ public class TbAccountServiceImpl implements TbAccountService {
 	 * @param end
 	 * @return
 	 */
+	// FIXME 
+	
 	public Map<String, List<Object>> selectTbAccountCountByDays(Date begin, Date end){
 		Map<String, List<Object>> map = new HashMap<>();
 		List<Object> xNameList = new ArrayList<>();
@@ -191,6 +195,16 @@ public class TbAccountServiceImpl implements TbAccountService {
 		
 		map.put("xNames", xNameList);
 		map.put("yData", yDataList);
+		
+//		int key = tbAccoutMapper.deleteByPrimaryKey(3l);
+		
+//		String tmp = null;
+//		if(tmp.equals("aaaa")){
+//			System.err.println("aaa");
+//		}
+		
+//		int i = 1/0;
+//		System.err.println(i);
 		
 		return map;
 	}

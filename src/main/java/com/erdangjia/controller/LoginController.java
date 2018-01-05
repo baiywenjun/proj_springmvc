@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.erdangjia.controller.domain.Result;
+import com.erdangjia.entity.TbAccount;
 
 
 
@@ -36,6 +37,10 @@ public class LoginController {
 			e.printStackTrace();
 			return new Result(203, "用户名或密码错误！");
 		}
+		
+		// 登录成功后，可过去用户session信息
+		TbAccount account = (TbAccount) subject.getPrincipal();
+		System.err.println(account.getUserName());
 		
 		return new Result(200,"欢迎你，"+userName+"!");
 	}

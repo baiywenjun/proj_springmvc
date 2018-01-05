@@ -41,7 +41,7 @@
 		</bean>
 		
 		<!-- 加载自定义的异常处理器 -->
-		<!-- <bean class="com.erdangjia.common.CustomHandlerExceptionResovler"/> -->
+		<bean class="com.erdangjia.common.CustomHandlerExceptionResovler"/>
 		
 		<!-- 配置附件上传解析器 -->
 		<!-- <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
@@ -53,6 +53,9 @@
 		<mvc:resources location="/css/" mapping="/css/**"/>
 		<mvc:resources location="/images/" mapping="/images/**"/>
 		
+		<!-- 开启aop切面代理cglib，这里使用用于代理shiro权限 -->
+		<aop:config proxy-target-class="true"></aop:config>
+		<!-- 由ContextLoaderListener来加载spring配置 -->
 		<!-- 加载其他配置文件 -->
-		<import resource="classpath:config/*.xml"/>
+		<!-- <import resource="classpath:config/*.xml"/> -->
 </beans>

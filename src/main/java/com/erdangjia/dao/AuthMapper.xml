@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erdangjia.dao.AuthMapper" >
+  <resultMap id="PermissionPO" type="com.erdangjia.dao.domain.PermissionPO" >
+    <id column="account_id" property="accountId" />
+    <result column="user_name" property="userName" />
+    <collection property="sysPermissionList" ofType="com.erdangjia.entity.SysPermission">
+    	<id column="" property=""/>
+    	<result column="permission_id" property="permissionId"/>
+    	<result column="permission_name" property="permissionName"/>
+    	<result column="parent_id" property="parentId"/>
+    	<result column="plevel" property="plevel"/>
+    	<result column="pisuse" property="pisuse"/>
+    	<result column="pismenu" property="pismenu"/>
+    	<result column="pcode" property="pcode"/>
+    	<result column="url" property="url"/>
+    </collection>
+  </resultMap>
+  
+  <select id="selectPermissionListById" resultMap="PermissionPO">
+  	select
+	u.account_id
+	,u.user_name
+	,p.*
+	FROM
+		tb_account u,
+		sys_user_role_rel ur,
+		sys_role r,
+		sys_role_permission_rel rp,
+		sys_permission p
+	where u.account_id = ur.user_id
+	and r.role_id = ur.role_id
+	and rp.role_id = r.role_id
+	and p.permission_id = rp.permission_id
+	and u.account_id = #{accountId}
+  </select>
+</mapper>

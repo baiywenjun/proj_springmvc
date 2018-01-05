@@ -3,6 +3,7 @@ package com.erdangjia.common;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -19,6 +20,8 @@ public class CustomHandlerExceptionResovler implements HandlerExceptionResolver{
 		CustomeException customeException;
 		if(ex instanceof CustomeException){
 			customeException = (CustomeException) ex;
+		}else if(ex instanceof UnauthorizedException) {
+			customeException = new CustomeException("800", "您没有此功能的访问权限");	
 		}else{
 			customeException = new CustomeException("500", "未知错误");
 			// TODO 要打log进日志文件

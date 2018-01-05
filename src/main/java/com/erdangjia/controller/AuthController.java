@@ -3,40 +3,32 @@ package com.erdangjia.controller;
 import java.io.IOException;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.erdangjia.service.TbAccountService;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * 用于测试，不拦截
+ * 权限验证测试
  * @author chenwenjun
  *
  */
 @Controller
-@RequestMapping("/test")
-public class TestController {
+@RequestMapping("/auth")
+public class AuthController {
 
-	@Autowired
-	private TbAccountService tbAccountService;
 	
-	@RequestMapping("/index")
-	public String testError(String param){
-		long val = Long.parseLong(param);
-		tbAccountService.selectByPrimaryKey(val);
-		return "index";
+	@RequiresPermissions("user:list")
+	@RequestMapping(value="/listUser",method=RequestMethod.GET)
+	public String listUser(){
+		System.err.println("you have this permission");
+		return "admin-list";
 	}
-	
-//	@RequestMapping(value="/listUser",method=RequestMethod.GET)
-//	public String listUser(){
-//		System.err.println("you have this permission");
-//		return "admin-list";
-//	}
 	
 	
 	

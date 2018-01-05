@@ -167,6 +167,7 @@
 				<p id="month_reg">null</p>
 			</div>
 		</div>
+		<shiro:hasPermission name="user:list">aasdf</shiro:hasPermission>
     	<div id="account_addline" style="width: 800px;height:400px;"></div>
     </div>
     

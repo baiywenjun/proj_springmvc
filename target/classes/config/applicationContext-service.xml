@@ -27,4 +27,5 @@
 		
 		<!-- 配置事物有注解控制 -->
 		<tx:annotation-driven transaction-manager="transactionManager"/>
+		
 </beans>
